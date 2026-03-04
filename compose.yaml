@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    networks:
+      - db_net
+    env_file:
+      - .env
+    ports:
+      - "5000:5432"
+    volumes:
+      - ./table.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+networks:
+  db_net:
+    driver: bridge
+    enable_ipv6: false

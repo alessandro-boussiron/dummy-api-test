@@ -19,6 +19,7 @@ var corsOptions = {
 const app = express()
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swagger_document));
+app.use(express.json);
 
 app.get('/api-spec.json', (req, res) => {
     res.sendFile(__dirname + '/swagger.json');
