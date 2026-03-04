@@ -23,6 +23,79 @@
           }
         }
       }
+    },
+    "/": {
+      "get": {
+        "summary": "Returns hello world",
+        "description": "Returns HTTP 200 code",
+        "tags": ["Test"],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/name/{username}": {
+      "get": {
+        "summary": "Returns hello {username}",
+        "description": "Returns HTTP 200 code with greeting in requested format",
+        "tags": ["Name"],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "The username to greet",
+            "schema": {
+              "type": "string"
+            },
+            "example": "test"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Hello test !"
+                    }
+                  }
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "example": "<p>Hello test !</p>"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Hello test !"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/date": {
+      "get": {
+        "summary": "Returns current date",
+        "description": "Returns HTTP 200 code",
+        "tags": ["Date"],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
     }
   }
 }
