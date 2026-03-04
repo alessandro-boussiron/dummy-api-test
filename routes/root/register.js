@@ -9,6 +9,7 @@ const { json } = require('body-parser');
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 // DB
 require('dotenv').config();
@@ -25,30 +26,32 @@ pool.on('error', (err) => {
     console.error(`Erreur inattendue lors du lancement de la connexion à la db :\n${toString(err)}`)
 })
 
+router.use(express.json());
 router.post('/', async (req, res) => {
     const type = req.get('Content-type');
     if (!type.includes('application/json')) {
-        return res.status(400).send(JSON.stringify('msg', 'Not a valid type'));
+        return res.status(400).json({msg: 'Not a valid type'});
     }
     const { email, password, name, firstname } = req.body;
     if (!email || !password || !name || !firstname ) {
-        return res.status(400).send(JSON.stringify('msg', 'missing field'))
+        return res.status(400).json({msg: 'missing field'});
     }
     try {
         const checkUser = await pool.query('SELECT id FROM "user" WHERE email = $1', [email]);
         if (checkUser.rowCount > 0) {
-            return res.status(400).send(JSON.stringify('msg', 'account already exists'))
+            return res.status(401).json({msg: "account already exists"});
         }
     } catch (err) {
         console.error(err);
-        return res.status(500).send(JSON.stringify('msg', 'server error'));
+        return res.status(500).json({msg: "server error"});
     }
     try {
             const query = `INSERT INTO "user" (email, password, name, firstname)
             VALUES ($1, $2, $3, $4)
             RETURNING id;`;
-            const hashed_password = bcrypt(password, process.env.PW_SALT);
-            const result = await pool.query(query, email, hashed_password, name, firstname);
+            const hashed_password = await bcrypt.hash(password, 10);
+            console.log(hashed_password);
+            const result = await pool.query(query, [email, hashed_password, name, firstname]);
             const id = result.rows[0];
             const data = {
                 user : {
@@ -57,10 +60,10 @@ router.post('/', async (req, res) => {
                 }
             };
             const token = await jwt.sign(data, process.env.JWT_SECRET);
-            return res.status(201).send(JSON.stringify('token', `${token}`))
+            return res.status(201).json({token: token})
     } catch (err) {
         console.error(err);
-        return res.status(500).send(JSON.stringify('msg', 'server error'));
+        return res.status(500).json({msg: 'server error'});
     }
         
 });

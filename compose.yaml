@@ -1,11 +1,7 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15
     restart: always
-    networks:
-      - db_net
     env_file:
       - .env
     ports:
@@ -15,7 +11,3 @@ services:
       - pgdata:/var/lib/postgresql/data
 volumes:
   pgdata:
-networks:
-  db_net:
-    driver: bridge
-    enable_ipv6: false
