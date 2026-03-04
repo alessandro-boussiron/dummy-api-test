@@ -39,7 +39,7 @@ The server will listen on port 3000.
 The API follows the OpenAPI 3.0.0 specification.
 
 |   Endpoint    |   Method    |   Description   |
-| ``` | ``` | ``` |
+| --- | --- | --- |
 | / | GET | Returns "Hello world" |
 | /test/teapot | GET | Returns HTTP 418 "I'm a teapot" |
 | /name/{username} | GET | Greets the user; supports JSON, HTML, and Plain Text |
