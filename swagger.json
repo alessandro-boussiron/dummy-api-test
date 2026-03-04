@@ -1,0 +1,28 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "EpyTodo API",
+    "version": "1.0.0",
+    "description": "API documentation for EpyTodo"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/test/teapot": {
+      "get": {
+        "summary": "Returns a teapot",
+        "description": "Returns HTTP 418 I'm a teapot status code",
+        "tags": ["Test"],
+        "responses": {
+          "418": {
+            "description": "I'm a teapot"
+          }
+        }
+      }
+    }
+  }
+}
