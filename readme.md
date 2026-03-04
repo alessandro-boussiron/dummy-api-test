@@ -1,6 +1,6 @@
-## EpyTodo Test API
+## Dummy API
 
-> This project is a lightweight Express-based API designed for testing routing and response formats. It includes integrated Swagger documentation and modular route handling.
+> This project is a dummy test API to learn about using express.js, routes, methods, status codes, and more globally about API creation. It is partially based on EpyTodo Epitech Project bootstrap
 
 ## 🚀 Getting Started
 
@@ -49,6 +49,5 @@ Accessing the Docs
 
 > Since this API is a just a dumb test to learn about CRUD, CORS and more generically backend programming, it is not hosted anywhere.
 
-    Interactive UI: http://localhost:3000/swagger
-
-    Raw Specification: http://localhost:3000/api-spec.json
+- Interactive UI: http://localhost:3000/swagger
+- Raw Specification: http://localhost:3000/api-spec.json
