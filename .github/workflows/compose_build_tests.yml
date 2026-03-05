@@ -1,0 +1,28 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build and Start Containers
+        run: docker compose up -d --build
+
+      - name: Check Container Status
+        run: docker compose ps
+
+      - name: Test Poll Endpoint
+        run: |
+          sleep 15
+          curl --fail http://localhost:3000 || exit 1
+          echo "Poll service is up!"
+      - name: Stop Containers
+        if: always()
+        run: docker compose down
